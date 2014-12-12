@@ -18,6 +18,7 @@ abstract class Adapter implements \Lysine\Service\IService {
      * @param array [$config]
      */
     public function __construct(array $config = array()) {
+    	
         $this->config = static::prepareConfig($config);
     }
 
@@ -57,6 +58,7 @@ abstract class Adapter implements \Lysine\Service\IService {
      * @throws \Lysine\Service\ConnectionError 数据库连接失败
      */
     public function connect() {
+    	
         if ($this->isConnected())
             return $this->handler;
 
@@ -601,6 +603,7 @@ class Select {
      * @param string|Expr|Select $table
      */
     public function __construct(Adapter $adapter, $table) {
+    	
         $this->adapter = $adapter;
         $this->table = $table;
     }

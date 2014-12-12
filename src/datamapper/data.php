@@ -459,6 +459,7 @@ abstract class Data {
      */
     final static public function getMapper() {
         $class = static::$mapper;
+        
         return $class::factory( get_called_class() );
     }
 
@@ -475,6 +476,7 @@ abstract class Data {
      * )
      */
     final static public function getOptions() {
+    	
         $options = array(
             'service' => static::$service,
             'collection' => static::$collection,

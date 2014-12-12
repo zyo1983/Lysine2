@@ -7,6 +7,10 @@ return array(
     'lysine\curl\http' => 'curl.php',
     'lysine\datamapper\cachedbmapper' => 'datamapper/mapper.php',
     'lysine\datamapper\dbdata' => 'datamapper/mapper.php',
+		'lysine\datamapper\mongodata' => 'datamapper/mongo/mapper.php',
+		'lysine\service\db\mongoadapter' => 'service/mongo.php',
+		'lysine\service\db\operatemongo' => 'service/mongo.php',
+		
     'lysine\datamapper\dbmapper' => 'datamapper/mapper.php',
     'lysine\datamapper\dbselect' => 'datamapper/mapper.php',
     'lysine\datamapper\data' => 'datamapper/data.php',
@@ -41,6 +45,7 @@ return array(
     'lysine\service\amqp' => 'service/amqp.php',
     'lysine\service\connectionexception' => 'error.php',
     'lysine\service\db\adapter' => 'service/db.php',
+	
     'lysine\service\db\adapter\mysql' => 'service/db/mysql.php',
     'lysine\service\db\adapter\pgsql' => 'service/db/pgsql.php',
     'lysine\service\db\adapter\sqlite' => 'service/db/sqlite.php',

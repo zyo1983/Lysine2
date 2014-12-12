@@ -95,10 +95,11 @@ abstract class Mapper {
      * @throws \RuntimeException 指定的配置不存在
      */
     public function getOption($key) {
+    	
         if (!isset($this->options[$key])) {
             throw new \RuntimeException('Mapper: undefined option "'.$key.'"');
         }
-
+ 
         return $this->options[$key];
     }
 
@@ -484,6 +485,7 @@ abstract class Mapper {
         ), $options);
 
         $primary_key = array();
+        
         foreach ($options['attributes'] as $key => $attribute) {
             $attribute = Types::normalizeAttribute($attribute);
 
@@ -686,9 +688,12 @@ class DBData extends \Lysine\DataMapper\Data {
     static protected $mapper = '\Lysine\DataMapper\DBMapper';
 
     static public function select() {
+    	
         return static::getMapper()->select();
     }
 }
+
+
 
 class DBMapper extends \Lysine\DataMapper\Mapper {
     public function select(\Lysine\Service\IService $service = null, $collection = null) {
@@ -794,6 +799,11 @@ class DBMapper extends \Lysine\DataMapper\Mapper {
         return array($where, $params);
     }
 }
+
+
+
+
+
 
 abstract class CacheDBMapper extends DBMapper {
     abstract protected function getCache($id);

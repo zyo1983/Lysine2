@@ -1,5 +1,6 @@
 <?php
-namespace Test;
+
+include_once dirname(__FILE__).'/BootStrap.php';
 
 class ContextTest extends \PHPUnit_Framework_TestCase {
     protected function createHandler($type, $config) {
