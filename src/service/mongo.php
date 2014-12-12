@@ -475,7 +475,7 @@ class OperateMongo {
 		$this->adapter = null;
 	}
 	
-	public function getCollectionObj($collection = null) {
+	/* public function getCollectionObj($collection = null) {
 		if ($collection) {
 			
 			$this->adapter->setCollection($collection);
@@ -536,6 +536,6 @@ class OperateMongo {
 	{
 		return $this->adapter->unionSelectMultiple($leftCollection, $rightCollection, $cols , $leftwhere = array() );
 	
-	}
+	} */
 	
 }
