@@ -3,32 +3,26 @@ namespace Lysine\Service\DB;
 
 use Lysine\Service;
 
-class MongoAdapter implements \Lysine\Service\IService 
-{ 
+class MongoAdapter implements \Lysine\Service\IService { 
     protected $config;
     protected $handler;
-    protected $error;
     
-    public function __construct(array $config) 
-    {
+    public function __construct(array $config) {
         $this->config = static::prepareConfig($config);
         return $this->connect();
     }
     
-    public function __destruct()
-    {
+    public function __destruct() {
         $this->disconnect();
     }
 
-    public function disconnect() 
-    {
+    public function disconnect() {
         if ($this->handler->connect()) {
             $this->handler = null;
         }
     }
 
-    public function connect() 
-    {
+    public function connect() {
         if ($this->handler->connect()) {
             return  $this->handler;
         }
@@ -36,15 +30,12 @@ class MongoAdapter implements \Lysine\Service\IService
         try {    		
             $this->handler  = new \MongoClient($this->config['dsn'], $this->config['option']);    	    		
         } catch (\Exception $e) {    		
-            $this->error = "MongoDB Error (connect() MongoDB failed";
+            throw new Service\ConnectionException('MongoDB Error connect() MongoDB failed', 0, $e, array(
+                'dsn' => $this->config['dsn'],
+            ));
         }
     	
         return $this->handler ;
-    }
- 
-    public function getError() 
-    {
-        return $this->error;    	
     }
     
     /**
@@ -53,16 +44,20 @@ class MongoAdapter implements \Lysine\Service\IService
      * @param array $config
      * @static
      * @access public
-     * @return array
+     * @return
+     * array(
+     *     'dsn' => (string),     //必选
+     *     'dbname' => (string),  //可选
+     *     'option' => (array),   //可选
+     * ) 
      */
-    protected function prepareConfig(array $config) 
-    {
+    protected function prepareConfig(array $config) {
         if (!isset($config['dsn'])) {
     	    throw new \InvalidArgumentException('Invalid database config, need "dsn" key');
         }
         $this->config = array(
                 'dsn'    => $config['dsn'],
-                'dbname' => isset($config['dbname']) ? $config['dbname'] : array(),
+                'dbname' => isset($config['dbname']) ? $config['dbname'] : "",
                 'option' => isset($config['option']) ? $config['option'] : array(),
         );
     	 
@@ -82,8 +77,7 @@ class MongoAdapter implements \Lysine\Service\IService
      * eq:
      * $this->selectDB('test')->selectCollection('user');
      * */
-    public function getCollection($collection) 
-    {
+    public function getCollection($collection) {
         if ($collection instanceof \MongoCollection) return $collection;
         
         if (!is_array($collection)) {
@@ -195,19 +189,16 @@ class MongoAdapter implements \Lysine\Service\IService
 }
 
 
-class OperateMongo 
-{
+class OperateMongo {
 	protected $adapter;
 
-	public function __construct(MongoAdapter $adapter, $collection) 
-	{
+	public function __construct(MongoAdapter $adapter, $collection) {
 	    $this->adapter = $adapter;
 	    $this->adapter->setCollection($collection);
 	    return $this->adapter;
 	}
 
-	public function __destruct()
-	{
+	public function __destruct() {
 	    $this->adapter = null;
 	}
 }
